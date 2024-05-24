@@ -40,7 +40,6 @@ const Login = ({ setToken }) => {
       console.log(data)
       setToken(data);
   
-      // SweetAlert2 success alert
       Swal.fire({
         icon: 'success',
         title: 'Login Successful',
@@ -49,7 +48,6 @@ const Login = ({ setToken }) => {
         navigate('/homepage');
       });
     } catch (error) {
-      // SweetAlert2 error alert
       Swal.fire({
         icon: 'error',
         title: 'Login Failed',

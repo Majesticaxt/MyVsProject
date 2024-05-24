@@ -57,7 +57,6 @@ const SignUp = () => {
       });
 
       if (error) {
-        // Check if error code corresponds to email already registered
         if (error.message.includes('User already registered')) {
           Swal.fire({
             icon: 'info',
@@ -91,7 +90,7 @@ const SignUp = () => {
         transition: 'background-color 0.5s ease-in-out',
       }}
     >
-      <h1 className="font-bold text-2xl text-white mb-4">Welcome</h1>
+      <h1 className="font-bold text-2xl text-white mb-4">Welcome to Teslex</h1>
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-lg p-8 md:p-12 lg:p-16 xl:p-20"

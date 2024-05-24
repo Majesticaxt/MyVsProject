@@ -12,14 +12,14 @@ const Homepage = ({ token }) => {
   const [transactions, setTransactions] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Fetch balance and transactions on component mount
+  // Fetch balance and transactions
   useEffect(() => {
     const fetchBalanceAndTransactions = async () => {
       const { data, error } = await supabase
         .from('bankdb')
         .select('accbaln, recent')
         .eq('user_id', token.user.id)
-        .single(); // Ensure we only get one record
+        .single(); 
 
       if (error) {
         console.error('Error fetching balance and transactions:', error);
@@ -124,7 +124,7 @@ const Homepage = ({ token }) => {
       </div>
 
       {(showDeposit || showWithdraw) && (
-        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
+        <div className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded-sm'>
           <div className='bg-gray-100 p-4 rounded-lg shadow-md flex justify-center items-center flex-col'>
             <h4>{showDeposit ? 'Deposit' : 'Withdraw'}</h4>
             <input
