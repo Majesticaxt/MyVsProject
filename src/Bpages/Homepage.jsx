@@ -13,8 +13,28 @@ const Homepage = ({ token }) => {
   const [error, setError] = useState('');
 
   useEffect(() => {
+    insertUserProfile();
     fetchUserProfile();
   }, [token.user.id]);
+
+  let insertUserProfile = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('profile')
+        .insert([
+          {
+            id: (token.user.id),
+            acc_balance: 0,
+            recent_transaction: [],
+          },
+        ]);
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      console.error('Error inserting user profile:', error.message);
+    }
+  };
 
   let fetchUserProfile = async () => {
     try {
@@ -23,12 +43,10 @@ const Homepage = ({ token }) => {
         .select('acc_balance, recent_transaction')
         .eq('id', token.user.id)
         .single();
-
       if (error) {
         throw error;
       }
-
-      if (data) {
+      else if (data) {
         setAccountBalance(data.acc_balance || 0);
         setRecentTransactions(data.recent_transaction || []);
       }
@@ -36,6 +54,31 @@ const Homepage = ({ token }) => {
       console.error('Error fetching user profile:', error.message);
     }
   };
+
+  // useEffect(() => {
+  //   fetchUserProfile();
+  // }, [token.user.id]);
+
+  // let fetchUserProfile = async () => {
+  //   try {
+  //     const { data, error } = await supabase
+  //       .from('profile')
+  //       .select('acc_balance, recent_transaction')
+  //       .eq('id', token.user.id)
+  //       .single();
+
+  //     if (error) {
+  //       throw error;
+  //     }
+
+  //     if (data) {
+  //       setAccountBalance(data.acc_balance || 0);
+  //       setRecentTransactions(data.recent_transaction || []);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error fetching user profile:', error.message);
+  //   }
+  // };
 
   const handleLogout = () => {
     sessionStorage.removeItem('token');

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../client';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Login = ({ setToken }) => {
   let navigate = useNavigate();
@@ -36,13 +37,27 @@ const Login = ({ setToken }) => {
         password: formData.password,
       });
       if (error) throw error;
-      console.log(data);
+      console.log(data)
       setToken(data);
-      navigate('/homepage');
+  
+      // SweetAlert2 success alert
+      Swal.fire({
+        icon: 'success',
+        title: 'Login Successful',
+        html: `<div>Welcome back, ${formData.email}!</div>`,
+      }).then(() => {
+        navigate('/homepage');
+      });
     } catch (error) {
-      alert(error);
+      // SweetAlert2 error alert
+      Swal.fire({
+        icon: 'error',
+        title: 'Login Failed',
+        text: error.message,
+      });
     }
   }
+
 
   return (
     <div
@@ -52,6 +67,7 @@ const Login = ({ setToken }) => {
       transition: 'background-color 0.5s ease-in-out',
     }}
     >
+      <h1 className="font-bold text-2xl text-white mb-4">Welcome to Teslex</h1>
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-lg p-8 md:p-12 lg:p-16 xl:p-20 flex-col"
@@ -77,7 +93,7 @@ const Login = ({ setToken }) => {
           Submit
         </button>
       </form>
-      <p className="text-black mt-8 text-lg">
+      <p className="text-white mt-8 text-lg">
         Don't have an account? <Link to="/signup">Sign Up</Link>
       </p>
       <div className='loading-dots'>
