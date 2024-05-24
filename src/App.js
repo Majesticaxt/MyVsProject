@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Login, SignUp,Homepage,Example } from './Bpages'
+import { Login, SignUp,Homepage} from './Bpages'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 const App = () => {
@@ -22,7 +22,7 @@ const App = () => {
       <Routes>
         <Route path='/signup' element = {<SignUp/>}/>
         <Route path='/' element = {<Login setToken={setToken}/>}/>
-        {token?<Route path={'/homepage'} element = {<Example token={token}/>}/>:""}
+        {token?<Route path={'/homepage'} element = {<Homepage token={token}/>}/>:""}
       </Routes>
     </BrowserRouter>
   )
